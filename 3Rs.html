@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<!-- <link rel="stylesheet" href="css/theme/white.css" id="theme"> -->
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+		.container{
+		    display: flex;
+		}
+		.col{
+		    flex: 1;
+		}
+		span.clouditem {
+		  padding-left: 0.15em;
+		  padding-right: 0.15em;
+		  line-height: 90%;
+		}
+		</style>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="intro">
+					<h1>The 3-R's of data-science:</h1>
+					<h3><span style="color:blue">repeatability</span>, <span style="color:green">reproducibility</span> & <span style="color:red">replicability</span></h3>
+					<!-- <h3>Repeatability, Reproducibility, and Replicability</h3> -->
+					<p>
+						<small>By <a href="https://www.linkedin.com/in/suneeta-mall-a6a0507/">Suneeta Mall</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Overview</h2>
+					<small>
+					<ul>
+						<li>Industry adaptation</li>
+						<li>Importance of 3-Rs</li>
+						<li>Peek into Reproducibility crisis</li>
+						<li>Define 3-Rs: <span style="color:blue">repeatability</span>, <span style="color:green">reproducibility</span> & <span style="color:red">replicability</span></li>
+						<li>Down the memory lane of confused terminology</li>
+						<li>Techniques to ensure <span style="color:blue">Repeatability</span> & <span style="color:green">Reproducibility</span></li>
+						<li>In depth review of few of the promising tools</li>
+						<li>Techniques to ensure <span style="color:red">Replicability</span></li>
+						<li>Few examples</li>
+						<li>One last point!</li>
+					</ul>
+					</small>
+				</section>
+
+				<section id="industry">
+					<h2>Industry Adaptation</h2>
+				<div class="container">
+
+				<div class="col">
+					<figure>
+						<a>
+							<img data-src="3Rs/resources/google-trends-big-data-machine-learning-usa-april-2017.jpg" >
+							<figcaption><small>https://www.kdnuggets.com/2017/05/machine-learning-overtaking-big-data.html</small></figcaption>
+						</a>
+					</figure>
+					<aside class="notes">
+							Adaptation of DS in industry has been phenomenon in last 5 years. This has been possible my many years of research, open source contribution by many research body e.g. tensorflow, pytorch etc. If we look around ourself, almost every organisation is conducting some sort of data-analytics, machine-learning, AI stream work to improve their products and services. Infact, acc to Orely 2018 Oct survey only 58% org said they were seriously working on AI based solution whlist only 14% indicating no involvement with data-science just yet.
+					</aside>
+				</div>
+
+				<div class="col">
+					<p>
+						<q><u>58%</u> of respondents indicated that they were <b>seriously</b> building data science based solutions, with only <u>14%</u> indicating no involvement just yet.<small>Evolving Data Infrastructure - Ben Lorica and Paco Nathan (O’Reilly, Oct 2018)</small>
+						</q>
+					</p>
+				</div>
+				</section>
+
+
+				<section id="industry-2">
+					<h2>Industry Adaptation</h2>
+				<div class="container">
+
+				<div class="col">
+					<figure>
+						<a>
+							<img data-src="3Rs/resources/google-trends-big-data-machine-learning-usa-april-2017.jpg" >
+							<figcaption><small>https://www.kdnuggets.com/2017/05/machine-learning-overtaking-big-data.html</small></figcaption>
+						</a>
+					</figure>
+					<aside class="notes">
+						As per a survey in UK (David Kelnar, MMC Ventures, 2016), 84% of startups focus on AI/DS/ML. 52% of companies preferred to build/use their own models.
+						<!-- AI market research -->
+						<!-- https://medium.com/mmc-writes/artificial-intelligence-in-the-uk-landscape-and-learnings-from-226-startups-70b9551f3e4c
+						https://medium.com/seldon-open-source-machine-learning/introducing-seldon-deploy-c390d11af20c
+						-->
+					</aside>
+				</div>
+
+				<div class="col">
+
+				</div>
+					<p>
+						<q>As per a survey in UK, <u>84%</u> of startups focus on Data-science. With <u>52%</u> of companies preferred to build/use their own models.<small>David Kelnar, MMC Ventures, 2016</small>
+						</q>
+					</p>
+				</div>
+				</section>
+
+				<section id="what-is-ds">
+					<h2>Data-Science</h2>
+				<div class="container">
+
+					<div class="col">
+						<figure>
+							<a>
+								<img width="361" height="409" data-src="3Rs/resources/xkcd_machine_learning_2x.png"  alt="https://xkcd.com/1838/" style="border:0;">
+								<figcaption><small>https://xkcd.com/1838/</small></figcaption>
+							</a>
+						</figure>
+					</div>
+
+					<div class="col">
+						<figure>
+							<a>
+								<img  data-src="3Rs/resources/ds.png" alt="https://xkcd.com/1838/" style="border:0;">
+								<!-- <figcaption><small>https://xkcd.com/1838/</small></figcaption> -->
+							</a>
+						</figure>
+						</p>
+					</div>
+				</div>
+				<aside class="notes">
+					Data-science has three dimentions -  data, model algorithm, parameters
+						Data-processing-ML algorithms-model training-tunning=Gold
+				</aside>
+				</section>
+				<section id="3r-in-ds">
+					<section>
+					<h2>Importance of 3-Rs in Data-Science</h2>
+					<a href="#" class="navigate-down">
+						<img width="400" height="300" data-src="3Rs/resources/huston.jpg" >
+					</a>
+						<p><span class="fragment">Know what... why ... & how ...</span></p>
+						<p><span class="fragment"> recreate it ... & solve it.</span></p>
+
+						<aside class="notes">
+							If we keep stirring the pod, we end up doing a lot of various bits of same types of work -- all leading to potentailly different results -- variances!
+							lots of tiny bits of repeatative work!
+
+							It is also not just about the answers - my data said so!
+							But knowing ....
+
+							To make it say the same thing again ... answer confidently!
+						</aside>
+					</section>
+					<section>
+						<h2>Importance of 3-R'S .. ctd..</h2>
+						<p>
+							We are continually faced by great opportunities brilliantly disguised as insoluble problems. <sub>Lee Iacocca</sub>
+						</p>
+						<p>The opportunities here are building:</p>
+						<p>
+							<span style="display: inline-block;" class="fragment fade-right">Reliable, & robust predictive solution </span>
+							<span style="display: inline-block;" class="fragment fade-right"> <b>- That can be trusted</b></span>
+						</p>
+						<aside class="notes">
+							Lets take a pause here, see what scientists thinks of 3R's
+						</aside>
+					</section>
+				</section>
+
+				<section id="importance-of-3r-in-ds">
+					<section>
+					<h2>IMPORTANCE OF 3-R'S: in research</h2>
+					<q>
+							Non-reproducible single occurrences are of no significance to science.
+							<br/>
+						<small>Popper (The logic of Scientific Discovery)</small>
+					</q>
+					<aside class="notes">
+						https://en.wikipedia.org/wiki/The_Logic_of_Scientific_Discovery
+					</aside>
+						<p>
+							<span class="fragment">Yet 70% of researchers have failed to reproduce another scientist's experiments</span>
+							<span class="fragment">, and > 50% have failed to reproduce their own experiments</span>
+						</p>
+						<p><span class="fragment"><small> - Nature's Survey (2016)</small></span></p>
+
+						<aside class="notes">
+							https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970
+							https://towardsdatascience.com/data-sciences-reproducibility-crisis-b87792d88513
+						</aside>
+					</section>
+					<section>
+						<a href="#" class="navigate-down">
+							<img width="424" height="340" data-src="3Rs/resources/reproducibility-graphic-online1.jpeg" >
+						</a>
+					</section>
+					<section>
+						<a href="#" class="navigate-down">
+							<img width="424" height="340" data-src="3Rs/resources/reproducibility-graphic-online6.jpg" >
+						</a>
+						<p class="fragment">A reproducibility crisis</p>
+					</section>
+					<section>
+						<p>International Conference on Learning Representations Annual reproducibility challenge (since 2018)<small>lead by Dr. Joelle Pineau, an Associate Professor at McGill University and lead for Facebook’s Artificial Intelligence Research lab (FAIR)</small></p>
+						<!-- https://www.youtube.com/watch?v=Vh4H0gOwdIg -->
+						<!-- https://qz.com/1118671/the-titans-of-ai-are-getting-their-work-double-checked-by-students/ -->
+						<!-- https://openreview.net/pdf?id=By4l2PbQ- -->
+						<aside class="notes">
+							Similarly there are many initaitives thats forcing researchers to submit reproducible researches asking for code, data etc to share.
+						</aside>
+					</section>
+					<section>
+						<!-- Reproducibility in Machine Learning-Based Studies/ An Example of Text Mining
+						Outcome was not very nice
+						So this is research and reproducibility crisis is very real.
+						But whats the impact of these in industry?
+						When industry adopts something, it brings it closer to people and makes it more assessible easily avaialble.
+						Whlist research impact and forges directions, it impacts people.
+						Now that we have established that its important, lets see how these 3-Rsare different -->
+
+						Thats research and reproducibility crisis is very real!
+						But why are we talking about it?
+						<p>
+							<span style="display: inline-block;" class="fragment fade-right">
+							Industry Adaptation is making data-science accessible to people</span>
+							<span style="display: inline-block;" class="fragment fade-right">Thus changing our community, and society</span>
+						</p>
+						<br/>
+						<p>
+							<span style="display: inline-block;" class="fragment fade-right">We have moral and social obligation to provide confident and reliable answers!</span>
+
+						</p>
+						<aside class="notes">
+							Conglomeration of industry folks or may or may have engagements with research.
+
+							But whats the impact of these in industry?
+
+							When industry adopts something, it brings it closer to people and makes it more assessible easily avaialble.
+							Whlist research impact and forges directions, it impacts people.
+							Now that we have established that its important, lets see how these 3-Rsare different
+
+							Not just because data said so but because we know why, how we got to this answer and what impact it has on recipent
+						</aside>
+					</section>
+				</section>
+
+				<section id="3rs">
+					<section>
+						<h2><sup>1</sup><span style="color:blue">Repeatability</span>, <span style="color:green">Reproducibility</span> & <span style="color:red">Replicability</span></h2>
+					</section>
+					<section>
+						<h2><sup>1.1</sup><span style="color:blue">Repeatability</span></h2>
+					    <div class="ulist">
+					        <img src="3Rs/resources/repeat.png" alt="Repeatability" width="10%" style="float: left;border:0;">
+					        <p>is the <u>closeness of the agreement</u> between the results of successive attempt of the same experiment/process carried out under <u>the same conditions</u>.</p>
+							<p>
+								<span style="display: inline-block;" class="fragment fade-right">e.g. replay, repeat</span>
+							</p>
+					    </div>
+					</section>
+
+					<section>
+						<h2><sup>1.1</sup><span style="color:blue">Repeatability</span></h2>
+								<pre><code class="hljs" data-trim data-line-numbers="7,11,13">
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+
+diabetes = datasets.load_diabetes()
+diabetes_X = diabetes.data[:, np.newaxis, 9]
+xtrain, xtest, ytrain, ytest = train_test_split(
+    diabetes_X, diabetes.target,
+    test_size=0.33, random_state=None)
+
+regr = linear_model.LinearRegression()
+regr.fit(xtrain, ytrain)
+diabetes_y_pred = regr.predict(xtest)
+
+# The coefficients
+print(f'Coefficients: {regr.coef_[0]}\n'
+      f'Mean squared error: {mean_squared_error(ytest, diabetes_y_pred):.2f}\n'
+      f'Variance score: {r2_score(ytest, diabetes_y_pred):.2f}')
+
+# Plot outputs
+plt.scatter(xtest, ytest,  color='green')
+plt.plot(xtest, diabetes_y_pred, color='red', linewidth=3)
+
+plt.ylabel('Quantitative measure of diabetes progression')
+plt.xlabel('One of six blood serum measurements of patients')
+
+plt.show()
+								</code></pre>
+								<p>A simple linear regression example on Scikit diabetes dataset</p>
+					</section>
+
+					<section>
+						<div class="container">
+							<div class="col">
+								<figure>
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/repeat_eg1.png">
+									<figcaption><small>Run 1</small></figcaption>
+								</a>
+								</figure>
+							</div>
+
+							<div class="col">
+								<figure>
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/repeat_eg2.png">
+									<figcaption><small>Run 2</small></figcaption>
+								</a>
+								</figure>
+
+							</div>
+						</div>
+
+					</section>
+
+					<section>
+						<h2><sup>1.1</sup><span style="color:blue">Repeatability</span></h2>
+								<pre><code class="hljs" data-trim data-line-numbers="7,11,13">
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+
+diabetes = datasets.load_diabetes()
+diabetes_X = diabetes.data[:, np.newaxis, 9]
+xtrain, xtest, ytrain, ytest = train_test_split(
+    diabetes_X, diabetes.target,
+    test_size=0.33, random_state=32)
+
+regr = linear_model.LinearRegression()
+regr.fit(xtrain, ytrain)
+diabetes_y_pred = regr.predict(xtest)
+
+# The coefficients
+print(f'Coefficients: {regr.coef_[0]}\n'
+      f'Mean squared error: {mean_squared_error(ytest, diabetes_y_pred):.2f}\n'
+      f'Variance score: {r2_score(ytest, diabetes_y_pred):.2f}')
+
+# Plot outputs
+plt.scatter(xtest, ytest,  color='green')
+plt.plot(xtest, diabetes_y_pred, color='red', linewidth=3)
+
+plt.ylabel('Quantitative measure of diabetes progression')
+plt.xlabel('One of six blood serum measurements of patients')
+
+plt.show()
+								</code></pre>
+								<p>Linear regression example on Scikit diabetes dataset with fixed seed
+								<!-- <small>https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html</small> --></p>
+					</section>
+
+					<section>
+						<div class="container">
+							<div class="col">
+								<figure>
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/pre_repro_eg1.png">
+									<figcaption><small>Repeat 1</small></figcaption>
+								</a>
+								</figure>
+							</div>
+
+							<div class="col">
+								<figure>
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/pre_repro_eg2.png">
+									<figcaption><small>Repeat 2</small></figcaption>
+								</a>
+								</figure>
+
+							</div>
+						</div>
+					</section>
+
+					<section>
+						<h2><sup>1.2</sup><span style="color:green">Reproducibility</span></h2>
+					    <div class="ulist">
+					        <img src="3Rs/resources/reproduce.svg" alt="Reproducibility" width="10%" style="float: left;border:0;">
+					        <p>is the <u>closeness of the agreement</u> between the results of successive attempt of the same experiment/process carried out under <u>different conditions</u>.</p>
+							<p>
+								<span style="display: inline-block;" class="fragment fade-right">e.g. repeat*</span>
+							</p>
+					    </div>
+					</section>
+
+
+					<section>
+						<h2><sup>1.2</sup><span style="color:green">Reproducibility</span></h2>
+								<pre><code class="hljs" data-trim data-line-numbers="7,11,13">
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+
+diabetes = datasets.load_diabetes()
+diabetes_X = diabetes.data[:, np.newaxis, 9]
+xtrain, xtest, ytrain, ytest = train_test_split(
+    diabetes_X, diabetes.target,
+    test_size=0.33, random_state=32)
+
+regr = linear_model.LinearRegression(normalize=False)
+regr.fit(xtrain, ytrain)
+diabetes_y_pred = regr.predict(xtest)
+
+# The coefficients
+print(f'Coefficients: {regr.coef_[0]}\n'
+      f'Mean squared error: {mean_squared_error(ytest, diabetes_y_pred):.2f}\n'
+      f'Variance score: {r2_score(ytest, diabetes_y_pred):.2f}')
+
+# Plot outputs
+plt.scatter(xtest, ytest,  color='green')
+plt.plot(xtest, diabetes_y_pred, color='red', linewidth=3)
+
+plt.ylabel('Quantitative measure of diabetes progression')
+plt.xlabel('One of six blood serum measurements of patients')
+
+plt.show()
+								</code></pre>
+								<p>Linear regression example on Scikit diabetes dataset with different configuration
+								<!-- <small>https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html</small> --></p>
+					</section>
+
+					<section>
+						<div class="container">
+							<div class="col">
+								<figure>
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/pre_repro_eg2.png">
+									<figcaption><small>Model fixed seed</small></figcaption>
+								</a>
+								</figure>
+							</div>
+
+							<div class="col">
+								<figure>
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/pre_repro_normal_eg3.png">
+									<figcaption><small>Model fixed seed with different configuration</small></figcaption>
+								</a>
+								</figure>
+
+							</div>
+						</div>
+					</section>
+
+					<section>
+						<h2><sup>1.3</sup><span style="color:red">Replicability</span></h2>
+					    <div class="ulist">
+					        <img src="3Rs/resources/replicate.png" alt="Replicability" width="10%" style="float: left;border:0;">
+					        <p>is the <u>closeness of the agreement</u> between the results of original experiment/process to that of independent experiment/process conducted to simuate/replicate original experiement with <u>at least similar data-set, algorithms, and conditions</u>.</p>
+							<p>
+								<span style="display: inline-block;" class="fragment fade-right">e.g. duplicate, copy</span>
+							</p>
+					    </div>
+						<aside class="notes">
+							These are definitions of 3-Rsas per wikipedia, dictionaries and coming from software background - these definitions all make sense.
+							Loosely related but slighty different!
+						</aside>
+					</section>
+
+					<section>
+						<h2><sup>1.3</sup><span style="color:red">Replicability</span></h2>
+						<div class="container">
+							<div class="col">
+								<figure  class="fragment fade-right">
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/stephen_howkin.jpg">
+									<figcaption><small>Stephen hawking</small></figcaption>
+								</a>
+								</figure>
+							</div>
+
+							<div class="col">
+								<figure  class="fragment fade-right">
+								<a>
+									<img width="986" height="414" data-src="3Rs/resources/stephen_howkin_space.jpeg">
+									<figcaption><small>Stephen hawking in Space</small></figcaption>
+								</a>
+								</figure>
+							</div>
+						</div>
+						<aside class="notes">
+							Lack of robustness .. not having enough knowledge that human can fly and appear transverse
+						</aside>
+					</section>
+
+
+				</section>
+				<section>
+					<section id="history-of-confused-1">
+						<h2>History of confused terminology</h2>
+						<p class="fragment fade-in-then-out">
+							<small>
+								Plesser HE. Reproducibility vs. Replicability: A Brief History of a Confused Terminology. Front Neuroinform. 2018;11:76. Published 2018 Jan 18. doi:10.3389/fninf.2017.00076
+							</small>
+						</p>
+						<p class="fragment fade-in-then-out">
+							<small>
+								Claerbout, J. F., and Karrenbach, M. (1992). Electronic documents give reproducible research a new meaning. SEG Expanded Abstracts 11, 601–604. doi: 10.1190/1.1822162
+							</small>
+						</p>
+						<p class="fragment fade-in-then-out">
+							<small>
+								Drummond, C. (2009). “Replicability is not reproducibility: nor is it good science,” in Proceedings of the Evaluation Methods for Machine Learning Workshop at the 26th ICML (Montreal, QC). Available online at: http://www.site.uottawa.ca/~ cdrummon/pubs/ICMLws09.pdf
+							</small>
+						</p>
+						<aside class="notes">
+							Drummond argues against replicability and fravoured reproducibility,
+						</aside>
+
+					</section>
+
+ 					<section id="history-of-confused-2">
+						<p >
+							Association for Computing Machinery, 2016, defined:
+							<small>
+								<ul class="fragment fade-in-then-out">
+									<li><b><span style="color:blue">Repeatability:</span></b>same results under <u>same</u> conditions</li>
+									<li><b><span style="color:green">Replicability:</span></b>same results under <u>slightly different</u> conditions</li>
+									<li><b><span style="color:red">Reproducibility:</span></b>same results under <u>very different</u> conditions (independent simulation)</li>
+								</ul>
+							</small>
+						</p>
+						<p class="fragment fade-in-then-out">
+							<small>
+								Patil, P., Peng, R. D., and Leek, J. T. (2016). A statistical definition for reproducibility and replicability. bioRxiv. doi: 10.1101/066803.
+							</small>
+							<aside class="notes">
+								Highlighted the confusion amongst replicability, reproducibility - as to which one is clone and which is with only subtle differences.
+							</aside>
+						</p>
+						<p class="fragment fade-in-then-out">
+							<small>
+								Goodman, S. N., Fanelli, D., and Ioannidis, J. P. A. (2016). What does research reproducibility mean? Sci. Transl. Med. 8:341ps12. doi: 10.1126/scitranslmed.aaf5027
+							</small>
+						</p>
+ 					</section>
+					<section id="history-of-confused-3">
+						<h2>Universal Reproducibility</h2>
+						<p>
+							<small>
+								<ul style="display: inline-block;">
+								<li><b>Methods reproducibility:</b> provide enough detail so the procedures could be exactly repeated</li>
+								<br/>
+								<li><b>Results reproducibility:</b> obtain similar results from an independent study with same procedures as original experiment</li>
+								<br/>
+								<li><b>Inferential reproducibility:</b> draw the same conclusions from either an independent replication or a reanalysis of the original experiment</li>
+								</ul>
+							</small>
+						</p>
+					</section>
+
+					<section id="history-of-confused-enuf">
+						<p>
+							<aside class="notes"> Bike­shedding </aside>
+							<figure>
+							<a>
+								<img width="986" height="414" data-src="3Rs/resources/timeline_of_bicycle_design_2x.png"  alt="https://xkcd.com/1673">
+								<figcaption><small>https://xkcd.com/1673</small></figcaption>
+							</a>
+						</figure>
+						</p>
+						<aside class="notes">
+							Too much bike shredding .. thats not the purpose here.. The point is producibility may be more commonly used terms often define 3-Rsbut as data-scientists, software engineer and AI capability providers we need to make sure our answers are ....
+						</aside>
+					</section>
+					<section>
+						<div tagcloud>
+						     <span tagcloud-weight="5">Repeat</span>
+						     <span tagcloud-weight="5">Reproduce</span>
+						     <span tagcloud-weight="5">Replicate</span>
+						     <span tagcloud-weight="5">Robust</span>
+						     <span tagcloud-weight="5">Reliable</span>
+					 	</div>
+					 	<img class="fragment fade-in-then-out" data-src="3Rs/resources/shrug.png" >
+					</section>
+				</section>
+
+				<section id="ensure-repeat-reproduce">
+					<section>
+						<h2><sup>1.1</sup> Ensuring <span style="color:blue">repeatability</span></h2>
+						<ol>
+							<li>To Err is human: Automate <u>everything</u></li>
+							<li>Avoid adhoc changes</li>
+							<li>Reproducible randomness</li>
+							<figure class="fragment fade-in-then-out">
+								<a>
+									<img data-src="3Rs/resources/random_number.png"  alt="https://xkcd.com/221">
+									<figcaption><small><b>RFC 1149.5</b>: https://xkcd.com/221</small></figcaption>
+								</a>
+							</figure>
+							<aside class="notes">
+								Automate everything - even a machine can do it!
+								Ahdoc undocumented changes
+							</aside>
+						</ol>
+					</section>
+					<section>
+						<h2><sup>1.2</sup> Ensuring <span style="color:green">reproducibility</span></h2>
+						<ol>
+							<li>Ensuring <span style="color:blue">repeatability</span></li>
+							<li>Maintaining <u>full provenance</u></li>
+							<li>Model <u>managment, tracing</u></li>
+						</ol>
+					</section>
+					<section id="how-to-repeat-reproduce-process">
+						<h2>P<sup>2</sup> of R<sup>2</sup></h2>
+						<div class="container">
+							<div class="col">
+								<h4>Principle</h4>
+								<div tagcloud>
+									<span tagcloud-weight="1">Avoid adhoc changes</span>
+									<span tagcloud-weight="1">Reproducible randomness</span>
+								</div>
+							</div>
+
+							<div class="col">
+								<h4>Process</h4>
+								<div tagcloud>
+									<span tagcloud-weight="0">Auditing</span>
+									<span tagcloud-weight="1">Automate everything</span>
+									<span tagcloud-weight="1">Model Management</span>
+									<span tagcloud-weight="0">Serving</span>
+									<span tagcloud-weight="0">Model Tracing</span>
+									<span tagcloud-weight="1">Provenance</span>
+								</div>
+							</div>
+						</div>
+						<aside class="notes">
+							Data-science has three dimentions -  data, model algorithm, parameters
+								Data-processing-ML algorithms-model training-tunning=Gold
+						</aside>
+					</section>
+				</section>
+
+				<section id="DAG-tools">
+					<section>
+						<h3><sup>P1</sup>Automate everything</h3>
+						<figure>
+							<a>
+								<img width="180" height="356" data-src="3Rs/resources/DAG.png"  alt="https://xkcd.com/242/">
+								<figcaption><small>https://xkcd.com/242</small></figcaption>
+							</a>
+
+						</figure>
+						<p>
+							Introduce DAG pipelines that are
+								<span style="display: inline-block;" class="fragment fade-right">Simple, Modular,</span>
+								<span style="display: inline-block;" class="fragment fade-right">Pluggable, Scalable, & Reliable</span>
+						</p>
+					</section>
+
+					<section>
+						<figure>
+							<a>
+								<img style="border:0;" data-src="3Rs/resources/std_ml_dag.png" alt="std_ml_dag.png">
+								<figcaption><small>Standard ML DAG flow</small></figcaption>
+							</a>
+
+						</figure>
+					</section>
+
+					<section>
+						<h2>DAG tools for ML related workload</h2>
+						<div tagcloud>
+							<span tagcloud-weight="1">Mlflow</span>
+							<span tagcloud-weight="2">Airflow</span>
+							<span tagcloud-weight="2">Kubeflow</span>
+							<span tagcloud-weight="0">Azkaban</span><!-- * -->
+							<span tagcloud-weight="0">Luigi</span>
+							<span tagcloud-weight="3">Spark</span>
+							<span tagcloud-weight="0">Cookiecutter Data Science</span><!-- * -->
+							<span tagcloud-weight="0">Pipeline AI</span>
+							<span tagcloud-weight="0">Nextflow</span>
+							<span tagcloud-weight="0">Snakemake</span>
+							<span tagcloud-weight="2">DVC</span>
+							<span tagcloud-weight="1">Delta Lake</span>
+							<span tagcloud-weight="3">Pachyderm</span>
+							<span tagcloud-weight="0">Argo</span>
+							<span tagcloud-weight="0">Digdag</span>
+							<span tagcloud-weight="0">Bpipe</span>
+						</div>
+					 </section>
+				</section>
+
+
+				<section id="provenance">
+					<section>
+						<h3><sup>P2</sup>Full Provenance</h3>
+						<figure>
+							<a>
+								<img width="180" height="356" data-src="3Rs/resources/git_2x.png"  alt="https://xkcd.com/1597/">
+								<figcaption><small>https://xkcd.com/1597/</small></figcaption>
+							</a>
+
+						</figure>
+						<p>
+							Maintain version control over everything - aka
+								<span style="display: inline-block;" class="fragment fade-right">Lineage,</span>
+								<span style="display: inline-block;" class="fragment fade-right">Time Travel, Audit</span>
+						</p>
+					</section>
+					<section>
+						<h2>Tools useful for full provenance</h2>
+						<div tagcloud>
+						    <span tagcloud-weight="3">Pachyderm</span>
+							<span tagcloud-weight="2">Delta Lake</span>
+							<span tagcloud-weight="2">Data Version Control</span>
+							<span tagcloud-weight="1">Airflow*</span>
+						</div>
+					 </section>
+				</section>
+
+				<section id="model-mgmt">
+					<h3><sup>P3</sup>Model management - auditing, tracing, serving</h3>
+					<p>
+						Manage gamut of models with: auditing, tracing & serving
+					</p>
+					<div tagcloud class="fragment fade-right" >
+							<span tagcloud-weight="2">Delta Lake*</span>
+							<span tagcloud-weight="3">Seldon</span>
+							<span tagcloud-weight="3">Polyaxon</span>
+							<span tagcloud-weight="2">ModelDB</span>
+							<span tagcloud-weight="1">Data Version Control</span>
+							<span tagcloud-weight="2">Pachyderm*</span>
+							<span tagcloud-weight="3">Mlflow</span>
+							<span tagcloud-weight="3">Kubeflow</span>
+							<span tagcloud-weight="1">Comet.ml</span>
+							<br/>
+							<span tagcloud-weight="1">Pipeline AI</span>
+					</div>
+					<aside class="notes">
+						DVC - Audit and trace (not serving)
+						Pachyderm - Audit and trace only, serving can be achieved by Kubeflow, Seldon, or can be custom service
+						Kubeflow stack - Audit, tracing and serving (via modelDB, seldon, etc)
+						Polyaxon - With Argo and Seldon
+						Delta Lake - serving with mlflow (optionally mleap)
+					</aside>
+				</section>
+
+				<section id="dvc">
+					<section>
+						<h2><img data-src="3Rs/resources/dvc.png" alt="DVC"> Data Version Control</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img data-src="3Rs/resources/DVC-model-sharing-digram.png" alt="DVC">
+
+									</a>
+									<figcaption><small>Code in Git, data and meta in object store</small></figcaption>
+								</figure>
+							</div>
+							<div class="col">
+								<ul>
+									<li>Version control: Model, data and config</li>
+									<li>Git alike: pull, push etc.</li>
+									<li>Maintains metadata in .dvc</li>
+									<li>Analogous to GitOPS principles</li>
+								</ul>
+							</div>
+						</div>
+
+					</section>
+					<section>
+					<h2>Data Version Control</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img data-src="3Rs/resources/dvc-model-versioning-diagram.png" alt="DVC">
+
+									</a>
+									<figcaption><small>DVC</small></figcaption>
+								</figure>
+							</div>
+							<div class="col">
+								<pre><code class="hljs" data-trim data-line-numbers="8-9,11,13">
+# Step 1
+dvc run -d code/features.py \
+    -d data/src.tsv \
+    -o data/feature.p \
+    python code/features.py
+
+# Step 2
+dvc run -d data/feature.p \
+	-d code/train_model.py \
+	-o data/model.h5 \
+    python code/train_model.py
+
+								</code></pre>
+								<p>Examples</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h3>DVC</h3>
+						<div class="container">
+							<div class="col">
+								<h5>Pros</h5>
+								<ul>
+									<li>Not very dictative</li>
+									<li>Independent tools, integrates easily</li>
+									<li>Single source of truth with GitOPS</li>
+								</ul>
+							</div>
+							<div class="col">
+								<h5>Cons</h5>
+								<ul>
+									<li>DAG declaration not intutive</li>
+									<li>Too much onus on user to integrate with system</li>
+									<li>Relatively new - still evolving</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</section>
+
+				<section id="pachyderm">
+					<section>
+						<h2>Pachyderm</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img data-src="3Rs/resources/pachyderm_factory_gh_full.png" alt="Pachyderm">
+
+									</a>
+									<figcaption><small>Git repository for data</small></figcaption>
+								</figure>
+							</div>
+							<div class="col">
+								<ul>
+									<li>Data is first class citizen</li>
+									<li>Like DVC automatically manages versions</li>
+									<li>Containerized and platform agnostic</li>
+								</ul>
+							</div>
+						</div>
+
+					</section>
+					<section>
+						<h2>Pachyderm</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img data-src="3Rs/resources/pachyderm-pipeline.png">
+
+									</a>
+									<figcaption><small>Data repos</small></figcaption>
+								</figure>
+								<figure>
+									<a>
+										<img data-src="3Rs/resources/pachyderm_ex.png">
+
+									</a>
+									<figcaption><small>DAG Example of workflow</small></figcaption>
+								</figure>
+
+							</div>
+							<div class="col">
+								<pre><code class="hljs" data-trim data-line-numbers="4, 8, 11, 17">
+{ "input": { "union": [ {
+        "pfs": {
+          "glob": "/",
+          "repo": "training_data",
+        } }, {
+        "pfs": {
+          "glob": "/*.json",
+          "repo": "parameters",
+        } } ] },
+  "pipeline": {
+    "name": "model_train"
+  },
+  "transform": {
+    "image": "ubuntu",
+    "cmd": ["/bin/bash"],
+    "stdin": [
+      "train_model.py -data
+      /pfs/training_data
+      -param /pfs/parameters"
+    ]
+  }
+}
+
+								</code></pre>
+								<p>Pipeline Specification</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h3>Pachyderm</h3>
+						<div class="container">
+							<div class="col">
+								<h5>Pros</h5>
+								<ul>
+									<li>Treats data as first class entity</li>
+									<li>Manages versioning automatically</li>
+									<li>Simple pipeline constructs</li>
+									<li>Scalable & Distributed</li>
+									<li>Capability of long running notebooks</li>
+								</ul>
+							</div>
+							<div class="col">
+								<h5>Cons</h5>
+								<ul>
+									<li>Is not capable of model serving</li>
+									<li>Does not simplify model tracing</li>
+									<li>Still rapidly evolving</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</section>
+
+				</section>
+
+				<section id="Kubeflow-stack">
+					<section>
+						<h2><img data-src="3Rs/resources/kubeflow-icon.png">Kubeflow</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img data-src="3Rs/resources/pipelines-xgboost-graph.png">
+
+									</a>
+									<figcaption><small>ML Toolkit for Kubernetes</small></figcaption>
+								</figure>
+							</div>
+							<div class="col">
+								<ul>
+									<li>Provides infrastructure agnostic ML toolkit</li>
+									<li>Integrates with relevant softwares for seamless, scalable processing</li>
+									<li>Sources off data from object stores</li>
+									<li>Kubernetes specific</li>
+  								</ul>
+							</div>
+						</div>
+
+					</section>
+					<section>
+						<h2>Kubeflow</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img  data-src="3Rs/resources/kubeflow-metric.png">
+
+									</a>
+									<figcaption><small>Kubeflow pipeline eg</small></figcaption>
+								</figure>
+							</div>
+							<div class="col">
+								<pre><code class="hljs" data-trim data-line-numbers="3, 6, 9, 12">
+import kfp.dsl as dsl
+
+def PreprocessOp(...):
+    return dsl.ContainerOp(..)
+
+def TrainOp(...):
+    return dsl.ContainerOp(...)
+
+@dsl.pipeline(
+    name='resnet_cifar10_pipeline'
+)
+def resnet_pipeline(....):
+    persistent_volume_name = '/'
+    persistent_volume_path = '/path'
+    op_dict = {
+    'preprocess': PreprocessOp(....)
+    'train': TrainOp(...)
+    }
+    for _, op in op_dict.items():
+        op.add_volume(...)
+        op.add_volume_mount(...)
+
+if __name__ == '__main__':
+    import kfp.compiler as compiler
+    compiler.Compiler().compile(
+    resnet_pipeline,
+    __file__ + '.tar.gz')
+
+								</code></pre>
+								<p>Pipeline Specification</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h3>Kubeflow</h3>
+						<div class="container">
+							<div class="col">
+								<h5>Pros</h5>
+								<ul>
+									<li>Leverages kubernetes, scalable, distributed for ML compute</li>
+									<li>Nicely integrates with likes of Pachyderm, Katib, ModelDB, Seldon</li>
+									<li>GitOPS can be realize with ARGO</li>
+								</ul>
+							</div>
+							<div class="col">
+								<h5>Cons</h5>
+								<ul>
+									<li>Does not provide unified provenance</li>
+									<li>Requires DSL based pipeline spec</li>
+									<li>Installation may feel cumbersome</li>
+									<li>Still evolving and integrating with tools</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</section>
+
+				<section id="delta-lake">
+					<section>
+						<h2><img data-src="3Rs/resources/delta-lake-logo-tm.png">Delta-Lake</h2>
+						<ul>
+							<li>Promising offering for Hadoop based workloads</li>
+							<li>Leverages spark for data-pipelining</li>
+							<li>Manages provenance under time-travel feature</li>
+							<li>Model manament/tracing via mlflow</li>
+							<li>Model persistence via mleap</li>
+  						</ul>
+					</section>
+					<section>
+						<h2>Delta Lake</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img  data-src="3Rs/resources/mlflow_model_tracing.png">
+
+									</a>
+									<figcaption><small>MLFlow traces</small></figcaption>
+								</figure>
+							</div>
+							<div class="col">
+								<pre><code class="hljs" data-trim data-line-numbers="3, 6, 9, 12">
+from pyspark.ml import Pipeline
+
+training = spark.createDataFrame(...)
+tokenizer = Tokenizer(inputCol="text",
+		outputCol="words")
+hashingTF = HashingTF(...)
+lr = LogisticRegression(maxIter=10,
+	regParam=0.001)
+pipeline = Pipeline(stages=
+	[tokenizer, hashingTF, lr])
+model = pipeline.fit(training)
+prediction = model.transform(test)
+
+								</code></pre>
+								<p>Spark Pipeline Spec</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h3>Delta Lake</h3>
+						<p>Only recently launched under Apache 2: 0.1.0 24th April 2019!
+							<ul>
+								<li>Proprietary version is released a year ago and in use by many organization. </li>
+								<li>Very little documentation - so not enough is known</li>
+								<li>Claims to have solved the provenance part right!</li>
+								<li>Limited to Hadoop/Spark stack</li>
+							</ul>
+
+						</p>
+					</section>
+				</section>
+
+				<section id="Polyaxon">
+					<section>
+						<h2><img data-src="3Rs/resources/polyaxon.jpeg">Polyaxon</h2>
+						<ul>
+							<li>Platform agnostic solution to manage end to end lifecycle of deep leaning workload</li>
+							<li>Partly open source with enterprise option</li>
+							<li>Provides reproducibility and model tracing</li>
+							<li>Integrates with Seldon</li>
+							<li>Data provenance is not managed</li>
+  						</ul>
+  					</section>
+					<section>
+						<h2>Polyaxon</h2>
+						<div class="container">
+							<div class="col">
+								<figure>
+									<a>
+										<img  data-src="3Rs/resources/polyaxon-experiments.png">
+
+									</a>
+									<figcaption><small>Polyaxon experiment</small></figcaption>
+								</figure>
+							</div>
+							<div class="col">
+								<pre><code class="hljs" data-trim data-line-numbers="6, 11">
+version: 1
+
+kind: experiment
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install polyaxon-client
+
+run:
+  cmd: python model.py
+								</code></pre>
+								<pre><code class="hljs" data-trim data-line-numbers="1">
+polyaxon run -f polyaxonfile.yaml
+								</code></pre>
+								<p>Polyaxon Spec</p>
+							</div>
+						</div>
+					</section>
+				</section>
+
+				<section id="ensure-replication">
+					<section>
+						<h2><sup>1.3</sup>Ensuring <span style="color:red">replicability</span></h2>
+						<p>
+							Throwing in 2 more Rs: <u>Reliability</u> and <u>Robustness</u>
+							<div class="container">
+								<div class="col">
+									<small>
+										<ul>
+											<br/>
+											<li>Dataset represents right demographics</li>
+											<li>Robustness through data augumentation</li>
+											<li>Knowing decision boundaries of model</li>
+											<li>Model testing: against adverserial attacks</li>
+										</ul>
+									</small>
+								</div>
+								<div class="col">
+									<figure>
+										<a href="#">
+											<img width="300" height="300" data-src="3Rs/resources/testing-verification.gif">
+										</a>
+										<!-- <figcaption><small>http://www.cleverhans.io/security/privacy/ml/2017/06/14/verification.html</small></figcaption> -->
+										<figcaption>
+											<small>http://www.cleverhans.io - Blog by Goodfellow & Papernot</small>
+										</figcaption>
+									</figure>
+								</div>
+							</div>
+						</p>
+					</section>
+					<section>
+						<h2><sup>1.3</sup>Ensuring <span style="color:red">replicability</span></h2>
+						<p>
+								<span>
+									<q cite="https://arxiv.org/pdf/1809.08352.pdf">Not make confident mistakes <small>(Unrestricted Adversarial Examples -  Goodfellow <i>et al.</i>)</small>
+									</q>
+								</span>
+						</p>
+						<p>
+								<span>
+									<q cite="https://arxiv.org/pdf/1412.6572.pdf">Models generalization across architectures and training sets <small>(Explaining and harnessing adversarial examples -  Szegedy <i>et al.</i>)</small>
+									</q>
+								</span>
+						</p>
+						<aside class="notes">
+							Robustness through data augumentation, good generalization.
+							It is moral and ethical responbility to give accurate answer to clients. Yes, its driven by data and data said so! But how good is your data and how robust your model is.
+
+							Polar bear example
+						</aside>
+					</section>
+				</section>
+
+				<section id="ensure-replication-eg">
+					<section>
+						<h2>Examples 1</h2>
+						<a href="#" class="navigate-down">
+							<img data-src="3Rs/resources/Tiger-cat-to-lynx.png" >
+						</a>
+
+						<aside class="notes">
+							Understanably
+						</aside>
+					</section>
+					<section>
+						<h2>Example 2</h2>
+						<a href="#" class="navigate-down">
+							<img data-src="3Rs/resources/Tiger-cat-to-Tabby.png" >
+						</a>
+
+						<aside class="notes">
+							Understanably
+						</aside>
+					</section>
+					<section>
+						<pre><code class="hljs" data-trim data-line-numbers="8-9,11,13">
+import foolbox
+import numpy as np
+from foolbox.criteria import Misclassification
+from foolbox.models import KerasModel
+from foolbox.attacks import FGSM
+
+# model = <your model>
+fmodel = KerasModel(kmodel, bounds=(0, 255),
+                    preprocessing=(np.array([104, 116, 123]), 1))
+
+attack = FGSM(fmodel, criterion=Misclassification())
+# img, label = <your image>, <true label>
+adversarial = attack(img, label)
+
+					</code></pre>
+					<p>Examples generated by <a href="https://github.com/bethgelab/foolbox">foolbox</a>.</p>
+					</section>
+					<section>
+						<h2>Example 3</h2>
+						<figure>
+						<a href="#" class="navigate-down">
+							<img data-src="3Rs/resources/persian_cat.jpg" >
+
+						</a>
+						<figcaption><small>Persian Cat</small></figcaption>
+						</figure>
+
+						<aside class="notes">
+							Failed Gradient attack
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<h2>Lastly</h2>
+					<p>
+						<q>The price of greatness is responsibility.<small>Winston Churchill</small></q><br/>
+						<span style="display: inline-block;" class="fragment fade-right">Do data-science <u>responsibly</u>!</span>
+						<aside class="notes">
+							Data science is allowing us to realize greater potentials in our domains!
+						</aside>
+					</p>
+
+
+				</section>
+
+				<section id="references">
+					<section>
+						<h2>References & links</h2>
+						<small>
+						<table>
+							<thead>
+								<tr>
+									<th>Software</th>
+									<th>Link</th>
+									<th>Capability</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								    <td>DVC</td>
+								    <td>https://iterative.ai/</td>
+								    <td>DAG, Provenance</td>
+								</tr>
+								<tr>
+								    <td>Pachyderm</td>
+								    <td>http://pachyderm.io</td>
+								    <td>DAG, Provenance</td>
+								</tr>
+								<tr>
+								    <td>Kubeflow</td>
+								    <td>https://github.com/kubeflow/kubeflow</td>
+								    <td>DAG, Model Management</td>
+								</tr>
+								<tr>
+								    <td>Delta Lake</td>
+								    <td>https://delta.io/</td>
+								    <td>DAG, Provenance, Model Management</td>
+								</tr>
+								<tr>
+								    <td>Pipeline AI</td>
+								    <td>https://github.com/PipelineAI/</td>
+								    <td>DAG, Model Management</td>
+								</tr>
+								<tr>
+								    <td>Polyaxon</td>
+								    <td>https://github.com/polyaxon/polyaxon</td>
+								    <td>DAG, Model Management</td>
+								</tr>
+								<tr>
+								    <td>Airflow</td>
+								    <td>http://airflow.apache.org/</td>
+								    <td>DAG, Limited provenance via Atlas DB</td>
+								</tr>
+							</tbody>
+						</table>
+					</small>
+					</section>
+
+
+					<section>
+						<h2>References & links: Part 2</h2>
+						<small>
+						<table>
+							<thead>
+								<tr>
+									<th>Software</th>
+									<th>Link</th>
+									<th>Capability</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								    <td>Luigi</td>
+								    <td>https://github.com/spotify/luigi</td>
+								    <td>DAG</td>
+								</tr>
+								<tr>
+								    <td>Nextflow</td>
+								    <td>https://www.nextflow.io/</td>
+								    <td>DAG</td>
+								</tr>
+								<tr>
+								    <td>Snakemake</td>
+								    <td>https://snakemake.readthedocs.io</td>
+								    <td>DAG</td>
+								</tr>
+								<tr>
+								    <td>Bpipe</td>
+								    <td>http://docs.bpipe.org/</td>
+								    <td>DAG</td>
+								</tr>
+								<tr>
+								    <td>digdag</td>
+								    <td>https://github.com/treasure-data/digdag/</td>
+								    <td>DAG</td>
+								</tr>
+								<tr>
+								    <td>Mleap</td>
+								    <td>https://github.com/combust/mleap</td>
+								    <td>Model Persistence</td>
+								</tr>
+								<tr>
+								    <td>Mlflow</td>
+								    <td>https://github.com/mlflow/mlflow/</td>
+								    <td>Model Management</td>
+								</tr>
+								<tr>
+								    <td>Seldon</td>
+								    <td>https://www.seldon.io/</td>
+								    <td>Model Management</td>
+								</tr>
+								<tr>
+								    <td>Modeldb</td>
+								    <td>https://github.com/mitdbg/modeldb</td>
+								    <td>Model Management</td>
+								</tr>
+								<tr>
+								    <td>Katib</td>
+								    <td>https://github.com/kubeflow/katib</td>
+								    <td>Hyper parameter tunning</td>
+								</tr>
+							</tbody>
+						</table>
+					</small>
+					</section>
+
+
+				</section>
+
+				<section>
+					<h2>Thank you!</h2>
+					<h4>Questions??</h4>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/tagcloud/tagcloud.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

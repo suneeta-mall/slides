@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+					<section data-markdown>
+						<script type="text/template">
+							## Presentations/Talks
+
+							- Continuous Delivery Meets Custom Kubernetes Controller: A Declarative Configuration Approach to CI/CD - [KubeCon Europe 2018](https://kccnceu18.sched.com/event/DquY/continuous-delivery-meets-custom-kubernetes-controller-a-declarative-configuration-approach-to-cicd-suneeta-mall-simon-cochrane-nearmap-intermediate-skill-level-slides-attached). See [Slides](https://static.sched.com/hosted_files/kccnceu18/f2/Continuous%20Delivery%20Meets%20Custom%20Kubernetes%20Controller-%20A%20Declarative%20Configuration%20Approach%20to%20CICD.pdf) & [Vedio](https://www.youtube.com/watch?v=kBS_Wd41R8k&feature=youtu.be)
+
+							- The 3-R's of Data-Science - Repeatability, Reproducibility, and Replicability - [YOW Data Sydney 2019](https://data.yowconference.com.au/archive-2019/profile/?id=suneetamallhotmailcom). See [Slides](https://suneeta-mall.github.io/slides/3Rs.html)
+
+						</script>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
